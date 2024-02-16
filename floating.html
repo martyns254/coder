@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Floating Elements and Splash Colors</title>
+<style>
+  /* CSS styles */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* to prevent scrollbars from appearing */
+  }
+  .container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .floating {
+    position: absolute;
+    border-radius: 50%;
+    animation: float 5s infinite alternate ease-in-out;
+  }
+  .floating-1 {
+    width: 100px;
+    height: 100px;
+    background-color: #ff6f61;
+  }
+  .floating-2 {
+    width: 80px;
+    height: 80px;
+    background-color: #6b5b95;
+  }
+  .floating-3 {
+    width: 120px;
+    height: 120px;
+    background-color: #88b04b;
+  }
+  @keyframes float {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-20px);
+    }
+  }
+  @keyframes changeColor {
+    0% {
+      background-color: #ff6f61;
+    }
+    33% {
+      background-color: #6b5b95;
+    }
+    66% {
+      background-color: #88b04b;
+    }
+    100% {
+      background-color: #ff6f61;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="floating floating-1" style="left: 10%;"></div>
+  <div class="floating floating-2" style="left: 40%;"></div>
+  <div class="floating floating-3" style="left: 70%;"></div>
+</div>
+
+<script>
+  // JavaScript code
+  setInterval(changeBackground, 3000); // Change background color every 3 seconds
+
+  function changeBackground() {
+    document.body.style.animation = 'changeColor 3s infinite';
+  }
+</script>
+
+</body>
+</html>

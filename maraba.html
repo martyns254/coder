@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maraba Dairy Farm</title>
+<style>
+  /* CSS styles */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+  }
+  nav {
+    background-color: #f0f0f0;
+    padding: 10px 0;
+    text-align: center;
+  }
+  nav a {
+    text-decoration: none;
+    color: #333;
+    padding: 0 15px;
+  }
+  section {
+    padding: 20px;
+    text-align: center;
+  }
+  .button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .button:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Maraba Dairy Farm</h1>
+</header>
+
+<nav>
+  <a href="#home">Home</a>
+  <a href="#about">About Us</a>
+  <a href="#products">Our Products</a>
+  <a href="#contact">Contact Us</a>
+</nav>
+
+<section id="home">
+  <h2>Welcome to Maraba Dairy Farm</h2>
+  <p>We are dedicated to providing high-quality dairy products to our customers.</p>
+  <button class="button" onclick="showMore()">Show More</button>
+</section>
+
+<section id="about" style="display: none;">
+  <h2>About Us</h2>
+  <p>Maraba Dairy Farm is a family-owned business established in 1990. We have a passion for dairy farming and sustainability.</p>
+</section>
+
+<section id="products" style="display: none;">
+  <h2>Our Products</h2>
+  <p>We offer a variety of dairy products including milk, cheese, yogurt, and butter.</p>
+</section>
+
+<section id="contact" style="display: none;">
+  <h2>Contact Us</h2>
+  <p>Have a question or feedback? Reach out to us at contact@marabadairyfarm.com</p>
+</section>
+
+<script>
+  // JavaScript code
+  function showMore() {
+    var sections = document.querySelectorAll('section');
+    sections.forEach(function(section) {
+      section.style.display = 'block';
+    });
+    document.querySelector('.button').style.display = 'none';
+  }
+</script>
+
+</body>
+</html>
