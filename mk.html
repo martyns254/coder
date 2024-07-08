@@ -20,6 +20,13 @@
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
+  h1 {
+    color: #4CAF50;
+    text-align: center;
+  }
+  p {
+    text-align: center;
+  }
   img {
     max-width: 100%;
     height: auto;
@@ -28,6 +35,55 @@
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   }
+  .gallery {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  .gallery img {
+    width: 30%;
+    transition: transform 0.3s ease;
+  }
+  .gallery img:hover {
+    transform: scale(1.1);
+  }
+  .carousel {
+    position: relative;
+    max-width: 100%;
+    margin: auto;
+    overflow: hidden;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  .carousel img {
+    width: 100%;
+    height: auto;
+  }
+  .carousel-button {
+    position: absolute;
+    top: 50%;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transform: translateY(-50%);
+  }
+  .carousel-button.left {
+    left: 10px;
+  }
+  .carousel-button.right {
+    right: 10px;
+  }
+  .info-section {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+  }
 </style>
 </head>
 <body>
@@ -35,10 +91,47 @@
 <div class="container">
   <h1>Welcome to Maraba Dairy Farm</h1>
   <p>Explore our beautiful dairy farm through these images:</p>
-  <img src="cow.jpg" alt="Cow in the field">
-  <img src="barn.jpg" alt="Barn on the farm">
-  <img src="milking.jpg" alt="Milking cows">
+  <div class="carousel">
+    <button class="carousel-button left" onclick="prevSlide()">&#10094;</button>
+    <button class="carousel-button right" onclick="nextSlide()">&#10095;</button>
+    <img src="cow.jpg" alt="Cow in the field">
+    <img src="barn.jpg" alt="Barn on the farm" style="display:none;">
+    <img src="milking.jpg" alt="Milking cows" style="display:none;">
+  </div>
+  <div class="info-section">
+    <h2>About Maraba Dairy Farm</h2>
+    <p>Maraba Dairy Farm is dedicated to providing the highest quality dairy products. Our cows are well-cared for and our farm is maintained to the highest standards. We welcome visitors to come and see our operations firsthand.</p>
+  </div>
+  <div class="gallery">
+    <img src="cow.jpg" alt="Cow in the field">
+    <img src="barn.jpg" alt="Barn on the farm">
+    <img src="milking.jpg" alt="Milking cows">
+  </div>
 </div>
+
+<script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.carousel img');
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.style.display = i === index ? 'block' : 'none';
+    });
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+  }
+
+  function prevSlide() {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    showSlide(currentSlide);
+  }
+
+  // Initialize the carousel
+  showSlide(currentSlide);
+</script>
 
 </body>
 </html>
