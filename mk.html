@@ -11,7 +11,31 @@
     margin: 0;
     padding: 0;
     background-color: #f0f0f0;
+    transition: background-color 0.5s ease;
   }
+
+  header {
+    background-color: #4CAF50;
+    padding: 10px 0;
+    text-align: center;
+  }
+
+  nav ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  nav ul li {
+    display: inline;
+    margin: 0 10px;
+  }
+
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
   .container {
     width: 80%;
     margin: 20px auto;
@@ -19,14 +43,18 @@
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 20s ease-in-out;
   }
-  h1 {
-    color: #4CAF50;
+
+  h1, h2 {
+    color: #08b30e;
     text-align: center;
   }
-  p {
+
+  p, ul {
     text-align: center;
   }
+
   img {
     max-width: 100%;
     height: auto;
@@ -34,19 +62,24 @@
     margin: 20px auto;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
+
+  img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  }
+
   .gallery {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
   }
+
   .gallery img {
     width: 30%;
-    transition: transform 0.3s ease;
   }
-  .gallery img:hover {
-    transform: scale(1.1);
-  }
+
   .carousel {
     position: relative;
     max-width: 100%;
@@ -55,10 +88,12 @@
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   }
+
   .carousel img {
     width: 100%;
     height: auto;
   }
+
   .carousel-button {
     position: absolute;
     top: 50%;
@@ -69,13 +104,17 @@
     border: none;
     cursor: pointer;
     transform: translateY(-50%);
+    z-index: 1;
   }
+
   .carousel-button.left {
     left: 10px;
   }
+
   .carousel-button.right {
     right: 10px;
   }
+
   .info-section {
     margin-top: 40px;
     padding: 20px;
@@ -83,55 +122,206 @@
     color: white;
     border-radius: 5px;
     text-align: center;
+    animation: slideIn 1s ease-in-out;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  label {
+    margin: 10px 0 5px;
+  }
+
+  input, textarea {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 </style>
+<script>
+  // JavaScript for carousel
+  let currentSlide = 0;
+  document.addEventListener('DOMContentLoaded', function () {
+    const slides = document.querySelectorAll('.carousel img');
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.style.display = i === index ? 'block' : 'none';
+      });
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    // Initialize the carousel
+    showSlide(currentSlide);
+
+    // Auto-slide functionality
+    setInterval(nextSlide, 3000); // Change slide every 3 seconds
+
+    // Form submission (for contact form)
+    document.querySelector('form')?.addEventListener('submit', function(event) {
+      event.preventDefault();
+      alert('Thank you for your message. We will get back to you soon!');
+    });
+
+    // Assign functions to global scope for button clicks
+    window.nextSlide = nextSlide;
+    window.prevSlide = prevSlide;
+  });
+
+  function showPage(pageId) {
+    const pages = document.querySelectorAll('.container');
+    pages.forEach(page => {
+      page.style.display = 'none';
+    });
+    document.getElementById(pageId).style.display = 'block';
+  }
+
+  // Show the home page by default
+  document.addEventListener('DOMContentLoaded', function() {
+    showPage('home');
+  });
+</script>
 </head>
 <body>
 
-<div class="container">
-  <h1>Welcome to Maraba Dairy Farm</h1>
-  <p>Explore our beautiful dairy farm through these images:</p>
-  <div class="carousel">
-    <button class="carousel-button left" onclick="prevSlide()">&#10094;</button>
-    <button class="carousel-button right" onclick="nextSlide()">&#10095;</button>
-    <img src="cow.jpg" alt="Cow in the field">
-    <img src="barn.jpg" alt="Barn on the farm" style="display:none;">
-    <img src="milking.jpg" alt="Milking cows" style="display:none;">
+<header>
+  <nav>
+    <ul>
+      <li><a href="#" onclick="showPage('home')">Home</a></li>
+      <li><a href="#" onclick="showPage('about')">About</a></li>
+      <li><a href="#" onclick="showPage('products')">Products</a></li>
+      <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div id="content">
+  <div id="home" class="container">
+    <h1>Welcome to Maraba Dairy Farm</h1>
+    <p>Explore our beautiful dairy farm through these images:</p>
+    <div class="carousel">
+      <button class="carousel-button left" onclick="prevSlide()">&#10094;</button>
+      <button class="carousel-button right" onclick="nextSlide()">&#10095;</button>
+      <img src="C:\Users\hp\Downloads\cow.jpg" alt="Cow in the field">
+      <img src="C:\Users\hp\Downloads\barn.jpg" alt="Barn on the farm" style="display:none;">
+      <img src="C:\Users\hp\Downloads\feed.jpg" alt="Milking cows" style="display:none;">
+    </div>
+    <div class="info-section">
+      <h2>About Maraba Dairy Farm</h2>
+      <p>Maraba Dairy Farm is dedicated to providing the highest quality dairy products. Our cows are well-cared for and our farm is maintained to the highest standards. We welcome visitors to come and see our operations firsthand.</p>
+    </div>
+    <div class="gallery">
+      <img src="C:\Users\hp\Downloads\cow.jpg" alt="Cow in the field">
+      <img src="C:\Users\hp\Downloads\barn.jpg" alt="Barn on the farm">
+      <img src="C:\Users\hp\Downloads\milking.jpg" alt="Milking cows">
+    </div>
   </div>
-  <div class="info-section">
-    <h2>About Maraba Dairy Farm</h2>
-    <p>Maraba Dairy Farm is dedicated to providing the highest quality dairy products. Our cows are well-cared for and our farm is maintained to the highest standards. We welcome visitors to come and see our operations firsthand.</p>
+
+  <div id="about" class="container" style="display:none;">
+    <h1>About Us</h1>
+    <p>Maraba Dairy Farm has been a family-owned business for over 50 years, dedicated to producing high-quality dairy products with sustainable farming practices. Our farm is located in the heart of the countryside, offering the perfect environment for our cows to thrive.</p>
+    <div class="info-section">
+      <h2>Our History</h2>
+      <p>Founded in 1970, Maraba Dairy Farm started as a small farm with just a few cows. Over the years, we have grown into a larger operation while maintaining our commitment to quality and sustainability. Our farm is a testament to the hard work and dedication of our family and team.</p>
+    </div>
+    <div class="gallery">
+      <img src="C:\Users\hp\Downloads\farmhistory.jpg" alt="Farm history image">
+      <img src="C:\Users\hp\Downloads\family222.jpg" alt="Family running the farm">
+      <img src="C:\Users\hp\Downloads\practicesss.jpg" alt="Sustainable farming practices">
+    </div>
+  </div> 
+
+  <div id="products" class="container" style="display:none;">
+    <h1>Our Products</h1>
+    <p>We offer a wide range of dairy products made with the freshest ingredients. Our commitment to quality ensures that you receive the best products every time.</p>
+    <div class="info-section">
+      <h2>Product List</h2>
+      <ul>
+        <li>Fresh Milk</li>
+        <li>Cheese</li>
+        <li>Yogurt</li>
+        <li>Butter</li>
+        <li>Ice Cream</li>
+      </ul>
+    </div>
+    <div class="gallery">
+      <img src="C:\Users\hp\Downloads\fresh milk.jpg" alt="Fresh Milk">
+      <img src="C:\Users\hp\Downloads\cheese.jpg" alt="Cheese">
+      <img src="C:\Users\hp\Downloads\yoghurt.jpg" alt="Yogurt">
+    </div>
   </div>
-  <div class="gallery">
-    <img src="cow.jpg" alt="Cow in the field">
-    <img src="barn.jpg" alt="Barn on the farm">
-    <img src="milking.jpg" alt="Milking cows">
+
+  <div id="contact" class="container" style="display:none;">
+    <h1>Contact Us</h1>
+    <p>We'd love to hear from you! Whether you have questions about our products or want to learn more about our farm, feel free to get in touch.</p>
+    <div class="info-section">
+      <h2>Contact Information</h2>
+      <p>Email: <a href="mailto:info@marabadairyfarm.com">info@marabadairyfarm.com</a></p>
+      <p>Phone: 0759330299</p>
+      <p>Address: 227 Burnt Forest, Uasin Gishu, Kenya</p>
+    </div>
+    <div class="info-section">
+      <h2>Send Us a Message</h2>
+      <form action="contact.php" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" required></textarea>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
   </div>
 </div>
 
-<script>
-  let currentSlide = 0;
-  const slides = document.querySelectorAll('.carousel img');
-
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.style.display = i === index ? 'block' : 'none';
-    });
-  }
-
-  function nextSlide() {
-    currentSlide = (currentSlide + 1) % slides.length;
-    showSlide(currentSlide);
-  }
-
-  function prevSlide() {
-    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-    showSlide(currentSlide);
-  }
-
-  // Initialize the carousel
-  showSlide(currentSlide);
-</script>
-
 </body>
 </html>
+
